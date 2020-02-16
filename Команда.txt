@@ -1,0 +1,3 @@
+
+SET CLASSPATH=.;C:\Soft\Antlr\antlr-4.7.1-complete.jar;%CLASSPATH%
+antlr4 -Dlanguage=Python3 "F:\test\Grammar.g4"
