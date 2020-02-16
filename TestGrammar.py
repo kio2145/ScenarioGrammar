@@ -4,8 +4,12 @@ from antlr4 import *
 from GrammarLexer import GrammarLexer
 from GrammarParser import GrammarParser
 from functools import singledispatch
+from LanguagePart import LoadGrammar,LanguagePart
 import time
 def main(argv):
+    Grammar=LoadGrammar()
+    LP=Grammar.OpenFileGrammar()
+    print(LP.GetFaktors())
     #input = FileStream("input.txt")
     while True:
         inputs= InputStream(input('Comand: '))

@@ -1,11 +1,12 @@
-# Generated from F:\test\Grammar.g4 by ANTLR 4.7.1
+# Generated from F:\ScenarioGrammar\ScenarioGrammar\Grammar.g4 by ANTLR 4.7.1
 from antlr4 import *
 from io import StringIO
 from typing.io import TextIO
 import sys
 
  
-from LanguagePart import LanguagePart 
+from LanguagePart import LoadGrammar,LanguagePart
+import re
 
 
 def serializedATN():
@@ -89,28 +90,32 @@ class GrammarLexer(Lexer):
     ErrorCh=False
     ErrorMSG=""
     def GetTok(self):
-    	PartLanguage = LanguagePart()
-    	PartLanguage.ReadTok()
+    	Grammar=LoadGrammar()
+    	PartLanguage=Grammar.OpenFileGrammar()
+    	#PartLanguage.ReadTok()
     	self.Faktors=PartLanguage.GetFaktors()
     	self.Subjekt=PartLanguage.GetSubject()
     	self.Action=PartLanguage.GetAction()
     def GetQueri(self):
     	print(self.scenarioName)
     	print(self.scenarioEvent)
+    def RmSpace(self,s):
+    	s = re.sub(" +", " ", s)
+    	return s.strip()
     def ChToken(self,tok, tokName):
     	if tokName=="f":
     		for tmptok in tok.split(','):
-    			if tmptok.split('=')[0] not in self.Faktors:
+    			if self.RmSpace(tmptok.split('=')[0]) not in self.Faktors:
     				self.ErrorCh=True
-    				self.ErrorMSG="Фактору "+tmptok.split('=')[0]+" не існує"
-    	if tokName=="s" and tok.split(':')[0] not in self.Subjekt:
+    				self.ErrorMSG="Фактору "+self.RmSpace(tmptok.split('=')[0])+" не існує"
+    	if tokName=="s" and self.RmSpace(tok.split(':')[0]) not in self.Subjekt:
     		print(self.Subjekt)
     		print(tok)
     		self.ErrorCh=True
     		self.ErrorMSG="Об'экту  "+tok.split(':')[0]+" не існує"
-    	if tokName=="a" and tok not in self.Action:
+    	if tokName=="a" and self.RmSpace(tok.strip()) not in self.Action:
     		self.ErrorCh=True
     		self.ErrorMSG="Дії  "+tok+" не існує"
-    	self.scenarioEvent[self.scenarioIndex].append(tok)
+    	self.scenarioEvent[self.scenarioIndex].append(self.RmSpace(tok.split(':')[0]))
 
 

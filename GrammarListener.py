@@ -1,11 +1,12 @@
-# Generated from F:\test\Grammar.g4 by ANTLR 4.7.1
+# Generated from F:\ScenarioGrammar\ScenarioGrammar\Grammar.g4 by ANTLR 4.7.1
 from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .GrammarParser import GrammarParser
 else:
     from GrammarParser import GrammarParser
  
-from LanguagePart import LanguagePart 
+from LanguagePart import LoadGrammar,LanguagePart
+import re
 
 
 # This class defines a complete listener for a parse tree produced by GrammarParser.
